@@ -4,8 +4,6 @@
  */
 package agentes;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -13,9 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -24,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
 /**
@@ -44,9 +38,11 @@ public class Escenario extends JFrame
     private ImageIcon sampleIcon;
     private ImageIcon actualIcon;
     private ImageIcon motherIcon;
+
+    private ImageIcon smokeIcon;
     
-    private Agente wallE;
-    private Agente eva;
+    private Agente brandom;
+    private Agente emi;
 
 
 
@@ -106,8 +102,8 @@ public class Escenario extends JFrame
         motherIcon = new ImageIcon("imagenes/tree.png");
         motherIcon = new ImageIcon(motherIcon.getImage().getScaledInstance(50,50,  java.awt.Image.SCALE_SMOOTH));
         //Added 06/03/2023
-        //motherIcon = new ImageIcon("imagenes/smoke.png");
-       // motherIcon = new ImageIcon(motherIcon.getImage().getScaledInstance(50,50,  java.awt.Image.SCALE_SMOOTH));
+        smokeIcon = new ImageIcon("imagenes/smoke.png");
+        smokeIcon = new ImageIcon(smokeIcon.getImage().getScaledInstance(50,50,  java.awt.Image.SCALE_SMOOTH));
         
         this.setLayout(null);
         formaPlano();  
@@ -130,8 +126,8 @@ public class Escenario extends JFrame
         addWindowListener(new MyWindowAdapter());
         
         // Crea 2 agentes
-        wallE = new Agente("Wall-E",robot1, matrix, tablero);
-        eva = new Agente("Eva",robot2, matrix, tablero);
+        brandom = new Agente("Brandom",robot1, matrix, tablero);
+        emi = new Agente("Emi",robot2, matrix, tablero);
 
 
 
@@ -213,8 +209,8 @@ public class Escenario extends JFrame
     }
     private void gestionaRun(ActionEvent eventObject)
     {
-        if(!wallE.isAlive()) wallE.start();
-        if(!eva.isAlive()) eva.start();
+        if(!brandom.isAlive()) brandom.start();
+        if(!emi.isAlive()) emi.start();
         settings.setEnabled(false);
     }
        

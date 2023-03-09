@@ -75,7 +75,7 @@ public class Agente extends Thread
                 
             try
             {
-               sleep(100+aleatorio.nextInt(1000));
+               sleep(100000000+aleatorio.nextInt(1000));
             }
             catch (Exception ex)
             {
@@ -90,12 +90,13 @@ public class Agente extends Thread
     {
 
         casillaActual = tablero[i][j];
+        System.out.println("Tamano:" + (matrix.length-2));
+        System.out.println(this.nombre + " - Y:" + i + "-- X:" + j);
 
-        System.out.println("actual" + casillaActual);
-
-            casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
-            tablero[i][j].setIcon(icon); // Pone su figura en la nueva casilla
-            //System.out.println("Row: " + i + " Col:"    + j);
+        System.out.println("-----------------------------------------------");
+        casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
+        tablero[i][j].setIcon(icon); // Pone su figura en la nueva casilla
+        //System.out.println("Row: " + i + " Col:"    + j);
 
     }
     
