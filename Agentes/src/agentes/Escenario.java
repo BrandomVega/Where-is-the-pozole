@@ -214,6 +214,8 @@ public class Escenario extends JFrame
     }
     private void gestionaRun(ActionEvent eventObject)
     {
+        mapeoCoordenadas(coordenadasMotherShip);
+        System.out.println(coordenadasMotherShip);
         if(!brandom.isAlive()) brandom.start();
         if(!emi.isAlive()) emi.start();
         settings.setEnabled(false);
@@ -252,13 +254,13 @@ public class Escenario extends JFrame
     }
 
     private void mapeoCoordenadas(ArrayList<Integer> arreglo){
-        int removerX = 2;
-        int removerY = 3;
-        for(int i = 0; i < arreglo.size()/4 ; i++){
-            arreglo.remove(removerX);
-            arreglo.remove(removerY);
-            removerX += 4;
-            removerY += 4;
+        int remover = 2;
+        int tam = arreglo.size()/4;
+        for(int i = 0; i < tam ; i++){
+            arreglo.remove(remover);
+
+            arreglo.remove(remover);
+            remover += 2;
 
         }
     }
