@@ -27,21 +27,32 @@ public class Agente extends Thread
     JLabel casillaActual;
 
     Random aleatorio = new Random(System.currentTimeMillis());
+
+    ArrayList coordenadasMotherShip = new ArrayList<Integer>();
+
+    ArrayList coordenadasSample = new ArrayList<Integer>();
+
+    ArrayList coordenadasObstacle = new ArrayList<Integer>();
     
-    public Agente(String nombre, ImageIcon icon, int[][] matrix, JLabel tablero[][], ArrayList<Integer> coordenadasMotherShip)
+    public Agente(String nombre, ImageIcon icon, int[][] matrix, JLabel tablero[][], ArrayList<Integer> coordenadasMotherShip, ArrayList<Integer> coordenadasSample, ArrayList<Integer> coordenadasObstacle)
     {
         this.nombre = nombre;
         this.icon = icon;
         this.matrix = matrix;
         this.tablero = tablero;
+        this.coordenadasMotherShip = coordenadasMotherShip;
+        this.coordenadasObstacle = coordenadasObstacle;
+        this.coordenadasSample = coordenadasSample;
+
 
         
         this.i = aleatorio.nextInt(matrix.length);
         this.j = aleatorio.nextInt(matrix.length);
         tablero[i][j].setIcon(icon);
 
-        System.out.println(coordenadasMotherShip);
+
     }
+
 
 
 
@@ -51,9 +62,7 @@ public class Agente extends Thread
         int dirRow=1;
         int dirCol=1;
 
-
-        while(true)
-        {
+        while(true) {
             //posicion de robots i,j, posicion obstacle
             casillaAnterior = tablero[i][j];
 /*
@@ -121,14 +130,19 @@ public class Agente extends Thread
             }
         }
 
+                      
     }
-
-
 
     public synchronized void actualizarPosicion() {
         casillaActual = tablero[i][j];
         System.out.println("Tamano:" + (matrix.length-2));
         System.out.println(this.nombre + " - Y:" + i + "-- X:" + j);
+        System.out.println("-----------------------------------------------");
+        System.out.println("MOTHER: "+ this.coordenadasMotherShip);
+        System.out.println("-----------------------------------------------");
+        System.out.println("OBSTACLE: "+ this.coordenadasObstacle);
+        System.out.println("-----------------------------------------------");
+        System.out.println("SAMPLE:" + this.coordenadasSample);
         System.out.println("-----------------------------------------------");
         casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
         tablero[i][j].setIcon(icon); // Pone su figura en la nueva casilla

@@ -131,8 +131,10 @@ public class Escenario extends JFrame
         
         // Crea 2 agentes
         mapeoCoordenadas(coordenadasMotherShip);
-        brandom = new Agente("Brandom",robot1, matrix, tablero, coordenadasMotherShip);
-        emi = new Agente("Emi",robot2, matrix, tablero, coordenadasMotherShip);
+        mapeoCoordenadas(coordenadasSample);
+        mapeoCoordenadas(coordenadasObstacle);
+        brandom = new Agente("Brandom",robot1, matrix, tablero, coordenadasMotherShip, coordenadasSample, coordenadasObstacle);
+        emi = new Agente("Emi",robot2, matrix, tablero, coordenadasMotherShip, coordenadasSample, coordenadasObstacle);
 
 
 
@@ -215,7 +217,8 @@ public class Escenario extends JFrame
     private void gestionaRun(ActionEvent eventObject)
     {
         mapeoCoordenadas(coordenadasMotherShip);
-        System.out.println(coordenadasMotherShip);
+        mapeoCoordenadas(coordenadasSample);
+        mapeoCoordenadas(coordenadasObstacle);
         if(!brandom.isAlive()) brandom.start();
         if(!emi.isAlive()) emi.start();
         settings.setEnabled(false);
@@ -232,17 +235,20 @@ public class Escenario extends JFrame
             System.out.println("X: " + mapeo(casilla.getX()) + " Y: " + mapeo(casilla.getY()));
             coordenadasMotherShip.add(mapeo(casilla.getX()));
             coordenadasMotherShip.add(mapeo(casilla.getY()));
-//            coordenadasMotherShip.remove(coordenadasMotherShip.size() - 1);
-
-//            coordenadasMotherShip.remove(coordenadasMotherShip.size() - 1);
-
-            System.out.println(coordenadasMotherShip);
-
 
         }
 
-        if (actualIcon == obstacleIcon) System.out.println("has puesto un puerco");
-        if (actualIcon == sampleIcon) System.out.println("has puesto una mariwana");
+        if (actualIcon == obstacleIcon){
+            System.out.println("has puesto un puerco");
+            coordenadasObstacle.add(mapeo(casilla.getX()));
+            coordenadasObstacle.add(mapeo(casilla.getY()));
+
+        }
+        if (actualIcon == sampleIcon){
+            System.out.println("has puesto una mariwana");
+            coordenadasSample.add(mapeo(casilla.getX()));
+            coordenadasSample.add(mapeo(casilla.getY()));
+        }
     }
 
     private int mapeo(Integer x){
