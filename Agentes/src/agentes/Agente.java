@@ -4,6 +4,7 @@
  */
 package agentes;
 
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -27,7 +28,7 @@ public class Agente extends Thread
 
     Random aleatorio = new Random(System.currentTimeMillis());
     
-    public Agente(String nombre, ImageIcon icon, int[][] matrix, JLabel tablero[][])
+    public Agente(String nombre, ImageIcon icon, int[][] matrix, JLabel tablero[][], ArrayList<Integer> coordenadasMotherShip)
     {
         this.nombre = nombre;
         this.icon = icon;
@@ -37,7 +38,9 @@ public class Agente extends Thread
         
         this.i = aleatorio.nextInt(matrix.length);
         this.j = aleatorio.nextInt(matrix.length);
-        tablero[i][j].setIcon(icon);        
+        tablero[i][j].setIcon(icon);
+
+        System.out.println(coordenadasMotherShip);
     }
 
 
@@ -51,10 +54,6 @@ public class Agente extends Thread
         while(true)
         {
             //posicion de robots i,j, posicion obstacle
-
-
-
-
 
             casillaAnterior = tablero[i][j];
 
@@ -75,7 +74,7 @@ public class Agente extends Thread
                 
             try
             {
-               sleep(100000000+aleatorio.nextInt(1000));
+               sleep(1000+aleatorio.nextInt(1000));
             }
             catch (Exception ex)
             {
@@ -86,17 +85,18 @@ public class Agente extends Thread
                       
     }
 
-    public synchronized void actualizarPosicion()
-    {
-
+    public synchronized void actualizarPosicion() {
         casillaActual = tablero[i][j];
         System.out.println("Tamano:" + (matrix.length-2));
         System.out.println(this.nombre + " - Y:" + i + "-- X:" + j);
-
         System.out.println("-----------------------------------------------");
         casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
         tablero[i][j].setIcon(icon); // Pone su figura en la nueva casilla
         //System.out.println("Row: " + i + " Col:"    + j);
+
+    }
+
+    public synchronized void sensorNorte(){
 
     }
     

@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -27,6 +28,7 @@ import javax.swing.JRadioButtonMenuItem;
  */
 public class Escenario extends JFrame
 {
+
     
     private JLabel[][] tablero;     
     private int[][] matrix;
@@ -44,13 +46,15 @@ public class Escenario extends JFrame
     private Agente brandom;
     private Agente emi;
 
+    public ArrayList coordenadasMotherShip = new ArrayList<Integer>();
 
+    public ArrayList coordenadasSample = new ArrayList<Integer>();
 
-
+    public ArrayList coordenadasObstacle = new ArrayList<Integer>();
 
     private final BackGroundPanel fondo = new BackGroundPanel(new ImageIcon("imagenes/scene.png"));
     private final JMenu settings = new JMenu("Settings"); //Parte 1 del menu
-    private final JRadioButtonMenuItem obstacle = new JRadioButtonMenuItem("One time");
+    private final JRadioButtonMenuItem obstacle = new JRadioButtonMenuItem("Puerk");
     private final JRadioButtonMenuItem sample = new JRadioButtonMenuItem("Buds");
     private final JRadioButtonMenuItem motherShip = new JRadioButtonMenuItem("spot");
     
@@ -126,8 +130,9 @@ public class Escenario extends JFrame
         addWindowListener(new MyWindowAdapter());
         
         // Crea 2 agentes
-        brandom = new Agente("Brandom",robot1, matrix, tablero);
-        emi = new Agente("Emi",robot2, matrix, tablero);
+        mapeoCoordenadas(coordenadasMotherShip);
+        brandom = new Agente("Brandom",robot1, matrix, tablero, coordenadasMotherShip);
+        emi = new Agente("Emi",robot2, matrix, tablero, coordenadasMotherShip);
 
 
 
@@ -217,12 +222,46 @@ public class Escenario extends JFrame
     public void insertaObjeto(MouseEvent e)
     {
         JLabel casilla = (JLabel) e.getSource();
+
         if(actualIcon!=null) casilla.setIcon(actualIcon);
-        if(actualIcon == motherIcon) System.out.println("has puesto un spot");
+        if(actualIcon == motherIcon){
+
+            System.out.println("has puesto un spot");
+            System.out.println("X: " + mapeo(casilla.getX()) + " Y: " + mapeo(casilla.getY()));
+            coordenadasMotherShip.add(mapeo(casilla.getX()));
+            coordenadasMotherShip.add(mapeo(casilla.getY()));
+//            coordenadasMotherShip.remove(coordenadasMotherShip.size() - 1);
+
+//            coordenadasMotherShip.remove(coordenadasMotherShip.size() - 1);
+
+            System.out.println(coordenadasMotherShip);
+
+
+        }
+
         if (actualIcon == obstacleIcon) System.out.println("has puesto un puerco");
         if (actualIcon == sampleIcon) System.out.println("has puesto una mariwana");
     }
 
+    private int mapeo(Integer x){
+        if (x > 10){
+            return (x - 10) / 50;
+        }else{
+            return x - 10;
+        }
+    }
 
-    
+    private void mapeoCoordenadas(ArrayList<Integer> arreglo){
+        int removerX = 2;
+        int removerY = 3;
+        for(int i = 0; i < arreglo.size()/4 ; i++){
+            arreglo.remove(removerX);
+            arreglo.remove(removerY);
+            removerX += 4;
+            removerY += 4;
+
+        }
+    }
+
+
 }
