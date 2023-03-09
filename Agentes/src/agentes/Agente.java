@@ -17,6 +17,7 @@ public class Agente extends Thread
 {
 
     String nombre;
+    int a,b;
     int i;
     int j;
     ImageIcon icon;
@@ -61,14 +62,16 @@ public class Agente extends Thread
 
         int dirRow=1;
         int dirCol=1;
+        sensorNorte();
+        sensorSur();
+        sensorOeste();
+        sensorEste();
 
         while(true) {
-            //posicion de robots i,j, posicion obstacle
+
+
+
             casillaAnterior = tablero[i][j];
-/*
-                dirRow = aleatorio.nextInt(-1, 2); //only can move into -1 or 1
-                dirCol = aleatorio.nextInt(-1, 2);
-*/
 
             int[] validPosition = {0, 1, 0, -1, 1, 0, -1, 0};
             int index = aleatorio.nextInt(0, 4);
@@ -93,8 +96,6 @@ public class Agente extends Thread
                     break;
             }
 
-
-            System.out.println("fila: " + dirRow + "col:" + dirCol);
 
             //The agents cannot go out of the matrix
             if(i > matrix.length-2){
@@ -122,7 +123,7 @@ public class Agente extends Thread
 
             try
             {
-                sleep(94+aleatorio.nextInt(1));
+                sleep(1000+aleatorio.nextInt(1000));
             }
             catch (Exception ex)
             {
@@ -133,8 +134,29 @@ public class Agente extends Thread
                       
     }
 
+    public synchronized void objectoDetectado(int i_new, int j_new){
+        //System.out.println(this.nombre + " - Y:" + i + "-- X:" + j)
+
+        System.out.println("OBSTACLE: "+ this.coordenadasObstacle);
+
+        for(int recorrido = 0; recorrido < this.coordenadasObstacle.size(); recorrido++){ //Recorre todos los elementos
+            a = (int)this.coordenadasObstacle.get(recorrido);
+            b = (int)this.coordenadasObstacle.get(recorrido+1);
+            System.out.println("ACTUAL DATA " + " (i,j) =  " + i_new + "," + j_new + " "+ "  a,b "+ a + "," + b);
+            recorrido=recorrido+1;
+            if(b==i_new && a==j_new){
+                System.out.println("CORRELE GORDOOOOOOOOOO CORRELE");
+            }
+        }
+
+
+
+
+    }
+
     public synchronized void actualizarPosicion() {
         casillaActual = tablero[i][j];
+        /*
         System.out.println("Tamano:" + (matrix.length-2));
         System.out.println(this.nombre + " - Y:" + i + "-- X:" + j);
         System.out.println("-----------------------------------------------");
@@ -144,14 +166,53 @@ public class Agente extends Thread
         System.out.println("-----------------------------------------------");
         System.out.println("SAMPLE:" + this.coordenadasSample);
         System.out.println("-----------------------------------------------");
+        */
+
+        //CONTINUA CON SU CAMINO
         casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
         tablero[i][j].setIcon(icon); // Pone su figura en la nueva casilla
-        //System.out.println("Row: " + i + " Col:"    + j);
+        sensorNorte();
+        sensorSur();
+        sensorOeste();
+        sensorEste();
+
+
 
     }
 
     public synchronized void sensorNorte(){
-
+        if(i>0){
+            int i_new = i-1;
+            if(tablero[i_new][j].getIcon()!=null){
+                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> N O R T E <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                objectoDetectado(i_new,j);
+            }
+        }
     }
+    public synchronized void sensorSur(){
+        if(i<14){
+            int i_new = i+1;
+            if(tablero[i_new][j].getIcon()!=null){
+                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> S  U  R <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                objectoDetectado(i_new,j);
+            }
+        }
+    }
+    public synchronized void sensorEste(){
+        if(j<14){
+            if(tablero[i][j+1].getIcon()!=null){
+                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> E S T E <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            }
+        }
+    }
+    public synchronized void sensorOeste(){
+        if(j>0){
+            if(tablero[i][j-1].getIcon()!=null){
+                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> O E S T E  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            }
+        }
+    }
+
+
     
 }
