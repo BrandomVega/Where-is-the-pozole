@@ -55,27 +55,65 @@ public class Agente extends Thread
         while(true)
         {
             //posicion de robots i,j, posicion obstacle
-
             casillaAnterior = tablero[i][j];
+/*
+                dirRow = aleatorio.nextInt(-1, 2); //only can move into -1 or 1
+                dirCol = aleatorio.nextInt(-1, 2);
+*/
 
-            dirRow = aleatorio.nextInt(-1,2); //only can move into -1 or 1
-            dirCol = aleatorio.nextInt(-1,2);
+            int[] validPosition = {0, 1, 0, -1, 1, 0, -1, 0};
+            int index = aleatorio.nextInt(0, 4);
+
+
+            switch (index) {
+                case 0:
+                    dirRow = validPosition[0];
+                    dirCol = validPosition[1];
+                    break;
+                case 1:
+                    dirRow = validPosition[2];
+                    dirCol = validPosition[3];
+                    break;
+                case 2:
+                    dirRow = validPosition[4];
+                    dirCol = validPosition[5];
+                    break;
+                case 3:
+                    dirRow = validPosition[6];
+                    dirCol = validPosition[7];
+                    break;
+            }
+
+
+            System.out.println("fila: " + dirRow + "col:" + dirCol);
 
             //The agents cannot go out of the matrix
-            if(i > matrix.length-2) dirRow=-1;
-            if(i < 1) dirRow=1;
+            if(i > matrix.length-2){
+                dirRow=-1;
+                dirCol=0;
+            }
+            if(i < 1){
+                dirRow=1;
+                dirCol=0;
+            }
 
-            if(j > matrix.length-2) dirCol=-1;
-            if(j < 1) dirCol=1;
+            if(j > matrix.length-2){
+                dirCol=-1;
+                dirRow=0;
+            }
+            if(j < 1){
+                dirCol=1;
+                dirRow=0;
+            }
             //Add to the position
             i=i+dirRow;
             j=j+dirCol;
 
             actualizarPosicion();
-                
+
             try
             {
-               sleep(1000+aleatorio.nextInt(1000));
+                sleep(94+aleatorio.nextInt(1));
             }
             catch (Exception ex)
             {
@@ -83,8 +121,9 @@ public class Agente extends Thread
             }
         }
 
-                      
     }
+
+
 
     public synchronized void actualizarPosicion() {
         casillaActual = tablero[i][j];
