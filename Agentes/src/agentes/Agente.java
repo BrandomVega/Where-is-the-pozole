@@ -19,13 +19,9 @@ public class Agente extends Thread
 {
 
     String nombre;
-<<<<<<< HEAD
     ImageIcon motherIcon;
     ImageIcon smokeIcon;
 
-=======
-    int a,b;
->>>>>>> 6e88159efa5268b53e6216bcd95d50190eed5a35
     int i;
     int j;
     ImageIcon icon;
@@ -81,80 +77,23 @@ public class Agente extends Thread
     public void run()
     {
 
-<<<<<<< HEAD
-=======
-        int dirRow=1;
-        int dirCol=1;
-        sensorNorte();
-        sensorSur();
-        sensorOeste();
-        sensorEste();
-
->>>>>>> 6e88159efa5268b53e6216bcd95d50190eed5a35
         while(true) {
-
-
-
+            //posicion de robots i,j, posicion obstacle
             casillaAnterior = tablero[i][j];
-<<<<<<< HEAD
 /*
                 dirRow = aleatorio.nextInt(-1, 2); //only can move into -1 or 1
                 dirCol = aleatorio.nextInt(-1, 2);
 
 */
-=======
->>>>>>> 6e88159efa5268b53e6216bcd95d50190eed5a35
 
             ArrayList<Integer> dirCol_dirRow = this.movimiento();
 
 
-<<<<<<< HEAD
-=======
-            switch (index) {
-                case 0:
-                    dirRow = validPosition[0];
-                    dirCol = validPosition[1];
-                    break;
-                case 1:
-                    dirRow = validPosition[2];
-                    dirCol = validPosition[3];
-                    break;
-                case 2:
-                    dirRow = validPosition[4];
-                    dirCol = validPosition[5];
-                    break;
-                case 3:
-                    dirRow = validPosition[6];
-                    dirCol = validPosition[7];
-                    break;
-            }
-
-
-            //The agents cannot go out of the matrix
-            if(i > matrix.length-2){
-                dirRow=-1;
-                dirCol=0;
-            }
-            if(i < 1){
-                dirRow=1;
-                dirCol=0;
-            }
-
-            if(j > matrix.length-2){
-                dirCol=-1;
-                dirRow=0;
-            }
-            if(j < 1){
-                dirCol=1;
-                dirRow=0;
-            }
->>>>>>> 6e88159efa5268b53e6216bcd95d50190eed5a35
             //Add to the position
             i=i+dirCol_dirRow.get(0);
             j=j+dirCol_dirRow.get(1);
 
 
-<<<<<<< HEAD
 
             if(sensorArbolMariwuano()){
                 actualizarPosicionDejaArbol();
@@ -163,15 +102,6 @@ public class Agente extends Thread
                 if(sensorMineral()){
                     this.sensorGradiente();
                 }
-=======
-            try
-            {
-                sleep(1000+aleatorio.nextInt(1000));
-            }
-            catch (Exception ex)
-            {
-                ex.printStackTrace();
->>>>>>> 6e88159efa5268b53e6216bcd95d50190eed5a35
             }
 
             //moneedita pasa esto
@@ -182,29 +112,8 @@ public class Agente extends Thread
                       
     }
 
-    public synchronized void objectoDetectado(int i_new, int j_new){
-        //System.out.println(this.nombre + " - Y:" + i + "-- X:" + j)
-
-        System.out.println("OBSTACLE: "+ this.coordenadasObstacle);
-
-        for(int recorrido = 0; recorrido < this.coordenadasObstacle.size(); recorrido++){ //Recorre todos los elementos
-            a = (int)this.coordenadasObstacle.get(recorrido);
-            b = (int)this.coordenadasObstacle.get(recorrido+1);
-            System.out.println("ACTUAL DATA " + " (i,j) =  " + i_new + "," + j_new + " "+ "  a,b "+ a + "," + b);
-            recorrido=recorrido+1;
-            if(b==i_new && a==j_new){
-                System.out.println("CORRELE GORDOOOOOOOOOO CORRELE");
-            }
-        }
-
-
-
-
-    }
-
     public synchronized void actualizarPosicion() {
         casillaActual = tablero[i][j];
-<<<<<<< HEAD
 
         //System.out.println("Row: " + i + " Col:"    + j);
         if(this.eraArbol){
@@ -434,65 +343,5 @@ public class Agente extends Thread
 
 
 
-=======
-        /*
-        System.out.println("Tamano:" + (matrix.length-2));
-        System.out.println(this.nombre + " - Y:" + i + "-- X:" + j);
-        System.out.println("-----------------------------------------------");
-        System.out.println("MOTHER: "+ this.coordenadasMotherShip);
-        System.out.println("-----------------------------------------------");
-        System.out.println("OBSTACLE: "+ this.coordenadasObstacle);
-        System.out.println("-----------------------------------------------");
-        System.out.println("SAMPLE:" + this.coordenadasSample);
-        System.out.println("-----------------------------------------------");
-        */
-
-        //CONTINUA CON SU CAMINO
-        casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
-        tablero[i][j].setIcon(icon); // Pone su figura en la nueva casilla
-        sensorNorte();
-        sensorSur();
-        sensorOeste();
-        sensorEste();
-
-
-
-    }
-
-    public synchronized void sensorNorte(){
-        if(i>0){
-            int i_new = i-1;
-            if(tablero[i_new][j].getIcon()!=null){
-                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> N O R T E <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                objectoDetectado(i_new,j);
-            }
-        }
-    }
-    public synchronized void sensorSur(){
-        if(i<14){
-            int i_new = i+1;
-            if(tablero[i_new][j].getIcon()!=null){
-                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> S  U  R <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                objectoDetectado(i_new,j);
-            }
-        }
-    }
-    public synchronized void sensorEste(){
-        if(j<14){
-            if(tablero[i][j+1].getIcon()!=null){
-                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> E S T E <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            }
-        }
-    }
-    public synchronized void sensorOeste(){
-        if(j>0){
-            if(tablero[i][j-1].getIcon()!=null){
-                System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> O E S T E  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            }
-        }
-    }
-
-
->>>>>>> 6e88159efa5268b53e6216bcd95d50190eed5a35
     
 }
