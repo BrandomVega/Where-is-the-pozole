@@ -32,6 +32,7 @@ public class Agente extends Thread
     JLabel casillaActual;
     boolean cop = false;
     boolean eraArbol = false;
+    boolean trasMari = false;
 
 
 
@@ -65,6 +66,7 @@ public class Agente extends Thread
         smokeIcon = new ImageIcon("imagenes/smoke.png");
         smokeIcon = new ImageIcon(smokeIcon.getImage().getScaledInstance(50,50,  java.awt.Image.SCALE_SMOOTH));
         this.eraArbol = false;
+        this.trasMari = false;
 
 
 
@@ -126,6 +128,8 @@ public class Agente extends Thread
             casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
             casillaActual.setIcon(icon); // Pone su figura en la nueva casilla
         }
+        sleep();
+
 
 
     }
@@ -135,10 +139,26 @@ public class Agente extends Thread
 
         casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
         casillaActual.setIcon(null);
-        casillaActual.setIcon(smokeIcon);
+        if(this.trasMari){
+            casillaActual.setIcon(smokeIcon);
+            this.trasMari= false;
+            try
+            {
+                sleep(500+aleatorio.nextInt(1));
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }else{
+            casillaActual.setIcon(motherIcon);
+        }
         this.eraArbol = true;
 
         //System.out.println("Row: " + i + " Col:"    + j);
+        sleep();
+
+
 
 
     }
@@ -179,7 +199,7 @@ public class Agente extends Thread
             next_distance = Math.sqrt(Math.pow((aux_x),2) + Math.pow((aux_y),2));
             System.out.println("Distancia Sig: "+ next_distance);
 
-            if (next_distance < actual_distance){
+            if (next_distance <= actual_distance + 0.3){
                 casillaAnterior = tablero[i][j];
                 i=i+dirCol_dirRow.get(0);
                 j=j+dirCol_dirRow.get(1);
@@ -189,10 +209,7 @@ public class Agente extends Thread
                     actualizarPosicionDejaArbol();
                 }else{
 
-                    System.out.println("---------CORRREEEE----------");
-                    casillaActual = tablero[i][j];
-                    casillaAnterior.setIcon(null); // Elimina su figura de la casilla anterior
-                    casillaActual.setIcon(icon); // Pone su figura en la nueva casilla
+                    actualizarPosicion();
                 }
 
             }
@@ -237,14 +254,7 @@ public class Agente extends Thread
             dirCol_dirRow = this.randomDir();
         }
 
-        try
-        {
-            sleep(200+aleatorio.nextInt(1));
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
+
         return dirCol_dirRow;
 
     }
@@ -306,11 +316,22 @@ public class Agente extends Thread
         for (int recorrido = 0; recorrido < this.coordenadasSample.size(); recorrido++) { //Recorre todos los elementos
             a = (int) this.coordenadasSample.get(recorrido);
             b = (int) this.coordenadasSample.get(recorrido + 1);
+            int indexOfY = 0;
+            int indexOfX = 0;
             //System.out.println("ACTUAL DATA " + " (i,j) =  " + i_new + "," + j_new + " "+ "  a,b "+ a + "," + b);
             recorrido = recorrido + 1;
             if (b == i && a == j) {
                 System.out.println("><<<<<<<<<<<<<<<<<<<"  + "<<<<<<<<<<<<<<<<<<<<");
                 System.out.println("AGARRALA GORDOOOOOOOOOOO");
+                System.out.println(coordenadasSample);
+                System.out.println("X: " + a + " Y: "+ b);
+                indexOfY = coordenadasSample.indexOf(a);
+                coordenadasSample.remove(indexOfY);
+                coordenadasSample.remove(indexOfY);
+
+                System.out.println(coordenadasSample);
+                System.out.println("-----------------");
+                this.trasMari= true;
                 return true;
             }
         }
@@ -329,19 +350,25 @@ public class Agente extends Thread
             if (b == i && a == j) {
                 System.out.println("><<<<<<<<<<<<<<<<<<<"  + "<<<<<<<<<<<<<<<<<<<<");
                 System.out.println("ARRBOOOOOOLLLLL");
+
                 return true;
             }
         }
         return false;
 
     }
+    public synchronized void sleep(){
+        try
+        {
+            sleep(100+aleatorio.nextInt(1));
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
 
 
-
-
-
-
-
-
+    }
+    
     
 }
