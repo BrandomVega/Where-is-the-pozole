@@ -12,10 +12,6 @@ import javax.swing.*;
 import java.lang.Math;
 
 
-/**
- *
- * @author macario
- */
 public class Agente extends Thread {
 
     //  THIS PART REFERS TO AN AGENT PROPRIETIES
